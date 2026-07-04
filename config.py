@@ -1,28 +1,39 @@
 # config.py
 # Botga tegishli barcha maxfiy va statik sozlamalar shu yerda saqlanadi.
-# Productionga chiqarishdan oldin quyidagi qiymatlarni albatta o'zgartiring
-# yoki environment variable orqali bering (masalan .env fayl + python-dotenv).
+# Barcha maxfiy qiymatlar FAQAT environment variable orqali beriladi —
+# kodning ichida (va GitHub'da) hech qanday token/kalit saqlanmaydi.
+#
+# Lokal (o'z kompyuteringizda) test qilish uchun: shu papkada `.env` fayl
+# yarating (`.env.example`dan nusxa oling) — u avtomatik o'qiladi.
+# Railway'da esa "Variables" bo'limiga shu nomlar bilan qo'shasiz.
 
 import os
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # ------------------------------------------------------------------
 # Telegram bot tokeni (@BotFather dan olinadi)
+# Railway'da "Variables" bo'limiga BOT_TOKEN nomi bilan qo'shing.
 # ------------------------------------------------------------------
-BOT_TOKEN: str = os.getenv("BOT_TOKEN", "8439719103:AAGq3a2QUU4WfyyI3N3xWD17sd9Z40qFQH4")
+BOT_TOKEN: str = os.environ["BOT_TOKEN"]
 
 # ------------------------------------------------------------------
 # Botni birinchi marta ishga tushirganda admin bo'ladigan Telegram ID.
 # Keyinchalik botdagi "Admin tayinlash" bo'limi orqali yangi adminlar
 # qo'shilishi mumkin (ular database.py dagi admins jadvalida saqlanadi).
 # ------------------------------------------------------------------
-SUPER_ADMIN_ID: int = int(os.getenv("SUPER_ADMIN_ID", "8230858921"))
+SUPER_ADMIN_ID: int = int(os.environ["SUPER_ADMIN_ID"])
 
 # ------------------------------------------------------------------
 # Google Gemini API kaliti — to'lov chek(rasm)larini avtomatik
 # tekshirish (OCR + tahlil) uchun ishlatiladi.
 # https://aistudio.google.com/app/apikey dan olinadi.
 # ------------------------------------------------------------------
-GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "AQ.Ab8RN6LN09kFBHK8mU5jzqycbZHIcudYdc_DausNAX7NkskiaA")
+GEMINI_API_KEY: str = os.environ["GEMINI_API_KEY"]
 GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-3.1-flash-lite")
 GEMINI_API_URL: str = (
     f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
