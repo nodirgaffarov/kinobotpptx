@@ -312,7 +312,7 @@ async def cmd_start(message: Message, state: FSMContext) -> None:
         )
         return
 
-    await message.answer("👋 Xush kelibsiz! Botdan foydalanishingiz mumkin.")
+    await message.answer("👋 Xush kelibsiz! Botimiz ayrim nosozliklar tufayli kinolar joylanmagan iltimos sabr qiling.")
     await send_main_menu(message.chat.id, user_id)
 
 
